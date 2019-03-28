@@ -1,0 +1,240 @@
+@layout("/common/_container.html"){
+<style type="text/css">
+    .dataTable{
+        width: 100%
+    }
+    .dataTable thead{
+        background: #ebf0f6;
+    }
+    .dataTable thead th{
+        padding: 10px 0;
+        text-align:center;
+    }
+    .dataTable tbody td{
+        padding: 8px 0;
+        text-align:center;
+        word-break:break-all;
+        white-space : normal;
+    }
+    table,table tr th, table tr td {
+        border:1px solid #bababa;
+    }
+
+    .m-t-30{
+        margin-top:30px;
+    }
+    .d-title{
+        width: 100%;height: 30px;padding-left: 30px;background: #eee;line-height:30px;font-weight: bold;margin-bottom:20px;
+    }
+</style>
+
+<div class="panel blank-panel">
+    <div class="panel-heading">
+        <div class="panel-options">
+            <ul class="nav nav-tabs">
+                <li class="active">
+                    <a data-toggle="tab" href="#tab-1">受理</a>
+                </li>
+                <li>
+                    <a data-toggle="tab" href="#tab-2">材料</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="panel-body">
+        <div class="tab-content">
+            <div id="tab-1" class="tab-pane active">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content">
+                        <form action="#" method="post" class="form-horizontal" id="projectInfoForm">
+
+                            <input type="hidden" name="OpTypeNum" id="OpTypeNum" value='${apply.OPTYPENUM!}'>
+                            <input type="hidden" name="RecYear" id="RecYear" value='${apply.RECYEAR!}'>
+                            <input type="hidden" name="RecNum" id="RecNum" value='${apply.RECNUM!}'>
+
+                            <div class="row">
+
+
+                                <div class="d-title">
+                                    申请家庭情况调查表
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="col-sm-6 form-group">
+                                        <label class="col-sm-3 control-label">姓名</label>
+                                        <div class="col-sm-9">
+                                            <input class="form-control" id="OWNERNAME" name="OWNERNAME" type="text" value="${apply.OWNERNAME!}">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 form-group">
+                                        <label class="col-sm-3 control-label">性别</label>
+                                        <div class="col-sm-9">
+                                            <select class="form-control" id="OWNERSEXCODE" name="OWNERSEXCODE">
+                                                <option value="1">男</option>
+                                                <option value="2">女</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-12">
+                                    <div class="col-sm-6 form-group">
+                                        <label class="col-sm-3 control-label">证件类型</label>
+                                        <div class="col-sm-9">
+                                            <select class="form-control" id="OWNERCERTTYPECODE" name="OWNERCERTTYPECODE">
+                                                @for(node in idCardList){
+                                                    <option value="${node.code!}">${node.value!}</option>
+                                                @}
+                                            </select>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 form-group">
+                                        <label class="col-sm-3 control-label">证件号码</label>
+                                        <div class="col-sm-9">
+                                            <input class="form-control" id="OWNERCERTNUM" name="OWNERCERTNUM" type="text" value="${apply.OWNERCERTNUM!}">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-12">
+                                    <div class="col-sm-6 form-group">
+                                        <label class="col-sm-3 control-label">联系电话</label>
+                                        <div class="col-sm-9">
+                                            <input class="form-control" id="TELCODE" name="TELCODE" type="number" value="${apply.TELCODE!}">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 form-group">
+                                        <label class="col-sm-3 control-label">配偶姓名</label>
+                                        <div class="col-sm-9">
+                                            <input class="form-control" id="OWNERNAME_PEIOU" name="OWNERNAME_PEIOU" type="text" value="${apply.OWNERNAME_PEIOU!}">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-12">
+                                    <div class="col-sm-6 form-group">
+                                        <label class="col-sm-3 control-label">配偶性别</label>
+                                        <div class="col-sm-9">
+                                            <select class="form-control" id="OWNERSEXCODE_PEIOU" name="OWNERSEXCODE_PEIOU">
+                                                <option value="1">男</option>
+                                                <option value="2">女</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 form-group">
+                                        <label class="col-sm-3 control-label">配偶证件类型</label>
+                                        <div class="col-sm-9">
+                                            <select class="form-control" id="OWNERCERTTYPECODE_PEIOU" name="OWNERCERTTYPECODE_PEIOU">
+                                                @for(node in idCardList){
+                                                <option value="${node.code!}">${node.value!}</option>
+                                                @}
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="col-sm-6 form-group">
+                                        <label class="col-sm-3 control-label">配偶证件号码</label>
+                                        <div class="col-sm-9">
+                                            <input class="form-control" id="OWNERCERTNUM_PEIOU" name="OWNERCERTNUM_PEIOU" type="text" value="${apply.OWNERCERTNUM_PEIOU!}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row btn-group-m-t">
+                                    <div class="col-sm-10" style="text-align: center">
+                                        <#button btnCss="info" name="保存" id="saveFamilySurvey" icon="fa-check" clickFun="saveFamilySurveyFunction()"/>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div id="tab-2" class="tab-pane">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-content">
+                                <div class="row row-lg">
+                                    <div class="col-sm-12">
+                                        <button class="btn btn-primary " style="font-size: 15px;" onclick="addUploadTable('${apply.OPTYPENUM!}','${apply.RECYEAR!}','${apply.RECNUM!}');">+</button>
+                                        <form action="#" method="post" class="form-horizontal" id="uploadTbodyForm">
+                                        <table class="dataTable" data-mobile-responsive="true" data-click-to-select="true">
+                                            <thead>
+                                            <tr>
+                                                <th><input type="checkbox"></th>
+                                                <th>材料名称</th>
+                                                <th>类别</th>
+                                                <th>份数</th>
+                                                <th>页数</th>
+                                                <th>页码</th>
+                                                <th>附件上传</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody id="uploadTbody">
+                                                <input type="hidden" name="optypenum[]" value='${apply.OPTYPENUM!}'>
+                                                <input type="hidden" name="recyear[]" value='${apply.RECYEAR!}'>
+                                                <input type="hidden" name="recnum[]" value='${apply.RECNUM!}'>
+                                                <input type="hidden" name="recmatnum[]" value="1">
+                                                    <tr>
+                                                        <td>
+                                                            <input type="checkbox">
+                                                        </td>
+                                                        <td><input type="text" name="matname[]"></td>
+                                                        <td>
+                                                            <select id="arch_type" name="mattypecode[]">
+                                                                <option value="" selected>请选择</option>
+                                                                @for(node in materialList){
+                                                                <option value="${node.code!}">${node.value!}</option>
+                                                                @}
+                                                            </select>
+                                                        </td>
+                                                        <td>
+                                                                <input type="text" value="1" name="matcount[]">
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" value="1" name="matpage[]">
+                                                        </td>
+                                                        <td><input type="text" name="matkindcode[]"></td>
+                                                        <td>
+                                                            <button type="button" onclick="openUploadPage('${apply.OPTYPENUM!}','${apply.RECYEAR!}','${apply.RECNUM!}','1')">上传</button>
+                                                            <button type="button" onclick="openImagePage('${apply.OPTYPENUM!}','${apply.RECYEAR!}','${apply.RECNUM!}','1')">查看</button>
+                                                        </td>
+                                                    </tr>
+
+                                            </tbody>
+                                        </table>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="row btn-group-m-t">
+                                    <div class="col-sm-10" style="text-align: center">
+                                        <#button btnCss="info" name="保存" id="arch_save" icon="fa-check" clickFun="saveRecOpinions()"/>
+                                        <#button btnCss="danger" name="关闭" id="cancel" icon="fa-eraser" clickFun="closeLayer()"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    var readonly = Feng.getQueryString("readonly");
+    if(readonly == 'true'){
+        $("#projectInfoForm input").attr("readonly","readonly");
+        $("#ensure").attr("disabled","disabled");
+        $("#tab-2").find("input").attr("readonly","readonly");
+        $("#tab-2").find("button").attr("disabled","disabled");
+    }
+</script>
+<script src="${ctxPath}/static/modular/supporthouse/house_application.js"></script>
+
+@}

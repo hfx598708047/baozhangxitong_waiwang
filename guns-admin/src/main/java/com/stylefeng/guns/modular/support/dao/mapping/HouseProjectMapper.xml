@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.stylefeng.guns.modular.support.dao.HouseProjectMapper">
+
+    <resultMap id="userMap" type="java.util.HashMap">
+
+    </resultMap>
+
+    <resultMap id="projectMap" type="java.util.HashMap">
+
+    </resultMap>
+
+    <resultMap id="recordsMap" type="java.util.HashMap">
+
+    </resultMap>
+
+    <resultMap id="nodeMap" type="java.util.HashMap">
+
+    </resultMap>
+
+    <resultMap id="archMap" type="java.util.HashMap">
+
+    </resultMap>
+
+    <resultMap id="sendTargetMap" type="java.util.HashMap">
+
+    </resultMap>
+
+    <resultMap id="familySurveyMap" type="com.stylefeng.guns.modular.support.model.FamilySurvey">
+        <result column="OWNERNAME"           property="applicantName" />
+        <result column="OWNERSEXCODE"           property="applicantSex" />
+        <result column="marriedornot"           property="applicantMarry" />
+        <result column="ownerage"           property="applicantAge" />
+        <result column="OWNERUNIT"           property="applicantWork" />
+        <result column="NATIVEPLACE"           property="applicantResidence" />
+        <result column="OWNERADDRESS"           property="applicantAdress" />
+        <result column="housepropcode"           property="applicantNature" />
+        <result column="ownerincome"           property="applicantIncome" />
+        <result column="TELCODE"           property="applicantPhone" />
+        <result column="OWNERCERTTYPECODE"           property="OWNERCERTTYPECODE" />
+        <result column="OWNERCERTNUM"           property="applicantCard" />
+        <result column="owneraddressother"           property="applicantOtherHouse" />
+        <result column="residence_time"           property="applicantResidenceTime" />
+        <result column="district_BZF"           property="applicantReason.regional" />
+        <result column="appplytype_BZF"           property="applicantReason.application_mode" />
+        <result column="housetype_BZF"           property="applicantReason.apartment" />
+        <result column="reason"           property="applicantReason.reason" />
+        <result column="promise_applicant"           property="applicantReason.promise_applicant" />
+        <result column="promise_spouse"           property="applicantReason.promise_spouse" />
+        <result column="promise_time"           property="applicantReason.promise_time" />
+
+        <result column="MY_PHOTO"           property="MY_PHOTO" />
+        <result column="CIVIL_SERVANT"           property="civilServant" />
+    </resultMap>
+
+    <resultMap id="jointApplicantMap" type="com.stylefeng.guns.modular.support.model.JointApplicant">
+        <result column="OPTYPENUM"           property="OPTYPENUM" />
+        <result column="RECYEAR"           property="RECYEAR" />
+        <result column="RECNUM"           property="RECNUM" />
+        <result column="FamilyID"           property="jointApplicantId" />
+        <result column="FAMILYNAME"           property="jointApplicantName" />
+        <result column="OWNERSEXCODE"           property="jointApplicantSex" />
+        <result column="marriedornot"           property="jointApplicantMarry" />
+        <result column="ownerage"           property="jointApplicantAge" />
+        <result column="TELCODE"           property="jointApplicantPhone" />
+        <result column="FAMILYCERTTYPE"           property="OWNERCERTTYPECODE" />
+        <result column="familycertnum"           property="jointApplicantCard" />
+        <result column="OWNERUNIT"           property="jointApplicantWork" />
+        <result column="FAMILYTYPE"           property="jointApplicantRelation" />
+        <result column="ownerincome"           property="jointApplicantIncome" />
+        <result column="FAMILYHUJI"           property="jointApplicantResidence" />
+        <result column="OWNERADDRESS"           property="jointApplicantAddress" />
+        <result column="residence_time"           property="jointApplicantResidenceTime" />
+        <result column="MY_PHOTO"           property="MY_PHOTO" />
+    </resultMap>
+
+
+    <select id="recListCurrent"  statementType="CALLABLE" parameterType="java.util.Map">
+        call up_RecList_Current(
+        #{sRecNumGather,mode=IN,jdbcType=INTEGER},
+        #{bSuccess,mode=OUT,jdbcType=INTEGER},
+        #{RCSurface,mode=OUT,jdbcType=CURSOR,resultMap=recordsMap}
+        )
+    </select>
+
+
+    <select id="checkCreatePermission"  statementType="CALLABLE" parameterType="java.util.Map">
+        call up_RecReceivePower(
+        #{iOpTypeNum,mode=IN,jdbcType=INTEGER},
+        #{iUserNum,mode=IN,jdbcType=INTEGER},
+        #{iUserOpPower,mode=IN,jdbcType=INTEGER},
+        #{iSuccess,mode=OUT,jdbcType=INTEGER}
+        )
+    </select>
+    <select id="getProjectDetail" resultType="map" parameterType="map">
+        select OWNERNUM,OpTypeNum,RecYear,RecNum,OWNERNAME, chengjiandw,PROJNAME,PROJSIT,STARTDATE,ENDDATE,CELLCOUNT,ARCHITAREA,GUIHUACERTNUM,SHIGONGCERTNUM,RONGJILV,JIANZHUGUIMO
+        from rwrecowner t
+        where OpTypeNum = #{OpTypeNum} and RecYear=#{RecYear} and RecNum=#{RecNum} and OWNERNUM = 1
+    </select>
+    <select id="getArchList" statementType="CALLABLE" parameterType="java.util.Map">
+        call up_GetRecMat(
+        #{iOpTypeNum,mode=IN,jdbcType=INTEGER},
+        #{iRecYear, mode=IN, jdbcType=INTEGER},
+        #{iRecNum, mode=IN, jdbcType=INTEGER},
+        #{IsReadOnly, mode=IN, jdbcType=INTEGER},
+        #{curRec, mode=OUT, jdbcType=CURSOR, resultMap=nodeMap}
+        )
+    </select>
+    <select id="getFamilySurvey" resultMap="familySurveyMap">
+        SELECT *
+        FROM RWRECOWNER
+        WHERE OPTYPENUM = #{OPTYPENUM} AND RECYEAR = #{RECYEAR} AND RECNUM = #{RECNUM} AND OWNERNUM = 1
+    </select>
+    <select id="getNodeList" statementType="CALLABLE" parameterType="java.util.Map">
+        call up_GetRecWorkPhaseList(
+        #{iOptypenum,mode=IN,jdbcType=INTEGER},
+        #{iRecyear, mode=IN, jdbcType=INTEGER},
+        #{iRecnum, mode=IN, jdbcType=INTEGER},
+        #{rcList, mode=OUT, jdbcType=CURSOR, resultMap=nodeMap}
+        )
+    </select>
+    <select id="createNewRec"  statementType="CALLABLE" parameterType="java.util.Map">
+        call up_CreateNewRec_PUBLIC(
+        #{iOpTypeNum,mode=IN,jdbcType=INTEGER},
+        #{iOpPartNum,mode=IN,jdbcType=INTEGER},
+        #{iUserNum,mode=IN,jdbcType=INTEGER},
+        #{iYear,mode=OUT,jdbcType=INTEGER},
+        #{iMaxRecNum,mode=OUT,jdbcType=INTEGER}
+        )
+    </select>
+    <select id="openPage"  statementType="CALLABLE" parameterType="java.util.Map">
+        call up_logicid_disp(
+        #{iOpTypeNum,mode=IN,jdbcType=INTEGER},
+        #{iRecYear, mode=IN, jdbcType=INTEGER},
+        #{iRecNum, mode=IN, jdbcType=INTEGER},
+        #{sPage, mode=OUT, jdbcType=VARCHAR},
+        #{sMsg, mode=OUT, jdbcType=VARCHAR}
+        )
+    </select>
+    <select id="getMatInfo" resultType="integer"  parameterType="com.stylefeng.guns.modular.support.model.file_yuVo">
+        select i.imageid from RWRECMATIMAGE m,bzfimage.Tbbwimage i where optypenum= #{optypenum} and recyear= #{recyear} and recnum= #{recnum}  and recmatnum = #{recmatnum} and m.imagedescid = i.imagedescid
+    </select>
+
+    <update id="saveFamilySurvey" parameterType="com.stylefeng.guns.modular.support.model.FamilySurvey">
+        UPDATE RWRECOWNER
+        set
+        OWNERNAME = #{applicantName},
+        OWNERSEXCODE = #{applicantSex},
+        marriedornot = #{applicantMarry},
+        ownerage = #{applicantAge},
+        OWNERUNIT = #{applicantWork},
+        NATIVEPLACE = #{applicantResidence},
+        OWNERADDRESS = #{applicantAdress},
+        housepropcode = #{applicantNature},
+        ownerincome = #{applicantIncome},
+
+        TELCODE = #{applicantPhone},
+        OWNERCERTTYPECODE = #{OWNERCERTTYPECODE},
+        owneraddressother = #{applicantOtherHouse},
+        residence_time = #{applicantResidenceTime},
+        OWNERCERTNUM = #{applicantCard}
+        WHERE OpTypeNum = #{OPTYPENUM} and RecYear=#{RECYEAR} and RecNum=#{RECNUM}
+    </update>
+
+    <select id="projectList" statementType="CALLABLE" parameterType="java.util.Map">
+        call up_rmsqryall_net(
+        #{iUserNum, mode=IN, jdbcType=VARCHAR},
+        #{RCQry, mode=OUT, jdbcType=CURSOR, resultMap=projectMap}
+        )
+    </select>
+
+    <update id="submitInfo" parameterType="java.util.Map">
+        UPDATE rwrecinfo
+        SET
+        recstatecode = '1'
+        WHERE OpTypeNum = #{iOptypenum} and RecYear=#{iRecyear} and RecNum=#{iRecnum}
+    </update>
+
+    <insert id="addJointApplicant" parameterType="com.stylefeng.guns.modular.support.model.JointApplicant">
+        INSERT INTO RWRECOWNERFAMILY
+        (OPTYPENUM,RECYEAR,RECNUM,FamilyID,FAMILYNAME,
+        OWNERSEXCODE,marriedornot,ownerage,TELCODE,FAMILYCERTTYPE,
+        familycertnum,OWNERUNIT,FAMILYTYPE,ownerincome,FAMILYHUJI,
+        OWNERADDRESS,residence_time)
+        VALUES
+         (#{OPTYPENUM},#{RECYEAR},#{RECNUM},#{jointApplicantId},#{jointApplicantName},
+         #{jointApplicantSex},#{jointApplicantMarry},#{jointApplicantAge},#{jointApplicantPhone},#{OWNERCERTTYPECODE},
+         #{jointApplicantCard},#{jointApplicantWork},#{jointApplicantRelation},#{jointApplicantIncome},#{jointApplicantResidence},
+         #{jointApplicantAddress},#{jointApplicantResidenceTime}
+        )
+    </insert>
+
+    <delete id="deleteJointApplicant" parameterType="java.util.Map">
+        DELETE from RWRECOWNERFAMILY
+        WHERE OpTypeNum = #{iOptypenum} and RecYear=#{iRecyear} and RecNum=#{iRecnum}
+    </delete>
+
+    <select id="selectJointApplicant" parameterType="java.util.Map" resultMap="jointApplicantMap">
+        SELECT * from RWRECOWNERFAMILY
+        WHERE OpTypeNum = #{iOptypenum} and RecYear=#{iRecyear} and RecNum=#{iRecnum}
+    </select>
+    
+    <update id="saveOtherFamilySurvey" parameterType="com.stylefeng.guns.modular.support.model.ApplicantReason">
+        UPDATE RWRECOWNER
+        set
+        district_BZF = #{regional},
+        appplytype_BZF = #{application_mode},
+        housetype_BZF = #{apartment},
+        reason = #{reason},
+        promise_applicant = #{promise_applicant},
+        promise_spouse = #{promise_spouse},
+        promise_time = #{promise_time}
+        WHERE OpTypeNum = #{OPTYPENUM} and RecYear=#{RECYEAR} and RecNum=#{RECNUM}
+    </update>
+
+    <update id="updateFamilySurveySpouse" parameterType="com.stylefeng.guns.modular.support.model.FamilySurvey">
+        UPDATE RWRECOWNER
+        set
+        OWNERNAME_PEIOU = #{OWNERNAME_PEIOU},
+        OWNERSEXCODE_PEIOU = #{OWNERSEXCODE_PEIOU},
+        OWNERCERTTYPECODE_PEIOU = #{OWNERCERTTYPECODE_PEIOU},
+        OWNERCERTNUM_PEIOU = #{OWNERCERTNUM_PEIOU}
+        WHERE OpTypeNum = #{OPTYPENUM} and RecYear=#{RECYEAR} and RecNum=#{RECNUM}
+    </update>
+
+    <update id="savePicture" parameterType="java.util.HashMap">
+        UPDATE RWRECOWNER
+        SET
+        My_PHOTO = #{byt, javaType=byte[], jdbcType=BLOB, typeHandler=org.apache.ibatis.type.BlobTypeHandler}
+        WHERE OpTypeNum = #{OPTYPENUM} and RecYear=#{RECYEAR} and RecNum=#{RECNUM}
+    </update>
+    
+    <select id="selectTypeNum" resultType="String">
+        select oppartnum
+        from rwrecinfo
+        WHERE OPTYPENUM = #{OPTYPENUM} AND RECYEAR = #{RECYEAR} AND RECNUM = #{RECNUM}
+    </select>
+
+    <update id="setCivilServant">
+        UPDATE RWRECOWNER
+        SET
+        civil_servant = 1
+        WHERE OPTYPENUM = #{OPTYPENUM} AND RECYEAR = #{RECYEAR} AND RECNUM = #{RECNUM}
+    </update>
+
+    <update id="saveJointPicture" parameterType="java.util.HashMap">
+        UPDATE RWRECOWNERFAMILY
+        SET
+        My_PHOTO = #{byt, javaType=byte[], jdbcType=BLOB, typeHandler=org.apache.ibatis.type.BlobTypeHandler}
+        WHERE OpTypeNum = #{OPTYPENUM} and RecYear=#{RECYEAR} and RecNum=#{RECNUM} and FamilyID = #{FamilyID}
+    </update>
+
+    <select id="getJointApplicant" resultMap="jointApplicantMap">
+        SELECT * from RWRECOWNERFAMILY
+        WHERE OpTypeNum = #{OPTYPENUM} and RecYear=#{RECYEAR} and RecNum=#{RECNUM} and FamilyID = #{FamilyID}
+    </select>
+</mapper>

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.stylefeng.guns.modular.support.dao.file_yuMapper">
+
+
+
+	<insert id="insertMat" parameterType="com.stylefeng.guns.modular.support.model.file_yuVo">
+        insert into RWRECMAT (optypenum,recyear,recnum,recmatnum,matname,
+            	mattypecode,matcount,matpage,matkindcode) 
+            values( 
+		 #{optypenum,jdbcType=INTEGER},
+  		 #{recyear,jdbcType=INTEGER},
+  		 #{recnum,jdbcType=INTEGER},
+  		 #{recmatnum,jdbcType=INTEGER},
+  		 #{matname,jdbcType=VARCHAR},
+  		 #{mattypecode,jdbcType=VARCHAR},
+  		 #{matcount,jdbcType=INTEGER},
+  		 #{matpage,jdbcType=INTEGER},
+  		 #{matkindcode,jdbcType=VARCHAR})      	 
+	</insert>
+	
+	<delete id="deleteMat" parameterType="com.stylefeng.guns.modular.support.model.file_yuVo">
+		delete from RWRECMAT where optypenum= #{optypenum} 
+								and recyear= #{recyear} 
+								and recnum= #{recnum} 
+								and recmatnum = #{recmatnum}
+								
+	</delete>
+	
+	<update id="updateMat" parameterType="com.stylefeng.guns.modular.support.model.file_yuVo">
+        update RWRECMAT SET
+  		 matname = #{matname,jdbcType=VARCHAR},
+  		 mattypecode = #{mattypecode,jdbcType=VARCHAR},
+  		 matcount = #{matcount,jdbcType=INTEGER},
+  		 matpage = #{matpage,jdbcType=INTEGER},
+  		 matkindcode = #{matkindcode,jdbcType=VARCHAR}
+  		 where optypenum= #{optypenum} 
+			and recyear= #{recyear} 
+			and recnum= #{recnum} 
+			and recmatnum = #{recmatnum}
+	</update>
+
+	<insert id="insertImageDesc" parameterType="com.stylefeng.guns.modular.support.model.file_yuVo">
+		insert into TBBWIMAGEDESC (IMAGEDESCID) values (#{imagedescid,jdbcType=INTEGER})
+	</insert>
+	
+	<insert id="insertMatFile" parameterType="com.stylefeng.guns.modular.support.model.file_yuVo">
+        insert into RWRECMATIMAGE (optypenum,recyear,recnum,recmatnum,imagedescid
+        )values( 
+		 #{optypenum,jdbcType=INTEGER},
+  		 #{recyear,jdbcType=INTEGER},
+  		 #{recnum,jdbcType=INTEGER},
+  		 #{recmatnum,jdbcType=INTEGER},
+  		 #{imagedescid,jdbcType=INTEGER})      	 
+	</insert>  
+	
+		<insert id="insertFile" parameterType="com.stylefeng.guns.modular.support.model.file_yuVo">
+        insert into bzfimage.Tbbwimage (imageid,imagefile,imagedescid)
+            values( 
+		 #{imageid,jdbcType=INTEGER},
+  		 #{imagefile,jdbcType=LONGVARBINARY},
+  		 #{imagedescid,jdbcType=INTEGER})      	 
+	</insert>    
+
+	<update id="updateSignFile" parameterType="java.util.Map">
+        update bzfimage.Tbbwimage set
+  		 imagefile = #{imagefile}
+  		 where imageid = #{imageid}
+
+	</update>
+	<select id="selectimagedaul" resultType="java.lang.Integer">
+		select SQIMAGEID.nextval from dual
+	</select>
+	
+	<select id="selectimagedesdaul" resultType="java.lang.Integer">
+		select  SQIMAGEDESCID.nextval from dual
+	</select>
+
+	<!-- <select id="selectsbjbxx_yu" parameterType="com.bjsxt.vo.xbjbxx_yuVo" resultType="com.bjsxt.vo.xbjbxx_yuVo">
+		select qhnumber from rwrecquhao_yu where usernum=#{usernum}
+	</select>
+	 -->
+	<select id="selectFile" parameterType="com.stylefeng.guns.modular.support.model.sbjbxx_yuVo" resultType="com.stylefeng.guns.modular.support.model.file_yuVo">
+		select * from (select *from RWRECMAT where RWRECMAT.optypenum=#{optypenum} and RWRECMAT.recyear=#{recyear} and RWRECMAT.recnum=#{recnum}) A,
+			(select *from RWRECMATIMAGE where RWRECMATIMAGE.optypenum=#{optypenum} and RWRECMATIMAGE.recyear=#{recyear} and RWRECMATIMAGE.recnum=#{recnum}) B , bzfimage.Tbbwimage C
+				where A.RECMATNUM = B.RECMATNUM and B.IMAGEDESCID = C.IMAGEDESCID
+	</select>
+	
+		<select id="selectSignFile" parameterType="java.util.Map" resultType="com.stylefeng.guns.modular.support.model.file_yuVo">
+		select * from (select *from RWRECMAT where RWRECMAT.optypenum=#{optypenum} and RWRECMAT.recyear=#{recyear} and RWRECMAT.recnum=#{recnum}) A,
+			(select *from RWRECMATIMAGE where RWRECMATIMAGE.optypenum=#{optypenum} and RWRECMATIMAGE.recyear=#{recyear} and RWRECMATIMAGE.recnum=#{recnum}) B , bzfimage.Tbbwimage C
+				where A.RECMATNUM = B.RECMATNUM and B.RECMATNUM = #{recmatnum} and B.IMAGEDESCID = C.IMAGEDESCID
+	</select>
+	
+	<select id="selectMultFile" parameterType="java.util.Map" resultType="com.stylefeng.guns.modular.support.model.file_yuVo">
+		select * from (select *from RWRECMAT where RWRECMAT.optypenum=#{optypenum} and RWRECMAT.recyear=#{recyear} and RWRECMAT.recnum=#{recnum}) A,
+			(select *from RWRECMATIMAGE where RWRECMATIMAGE.optypenum=#{optypenum} and RWRECMATIMAGE.recyear=#{recyear} and RWRECMATIMAGE.recnum=#{recnum}) B , bzfimage.Tbbwimage C
+				where A.RECMATNUM = B.RECMATNUM and B.RECMATNUM = #{recmatnum} and B.IMAGEDESCID = C.IMAGEDESCID
+	</select>
+	
+		<select id="selectSignImage" parameterType="java.util.Map" resultType="com.stylefeng.guns.modular.support.model.file_yuVo">
+		select * from bzfimage.Tbbwimage	where imageid = #{imageid}
+	</select>
+	
+	
+	<select id="selectFileInfo" parameterType="com.stylefeng.guns.modular.support.model.sbjbxx_yuVo" resultType="com.stylefeng.guns.modular.support.model.file_yuVo">
+		select * from RWRECMAT where optypenum= #{optypenum} and recyear= #{recyear} and recnum= #{recnum} 
+	</select>
+
+</mapper>

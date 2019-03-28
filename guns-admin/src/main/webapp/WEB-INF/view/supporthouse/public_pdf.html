@@ -1,0 +1,674 @@
+
+<!--公务员申请限价商品房打印页面-->
+<!--封面-->
+<div style="width: 1000px;height: 1460px;border: 1px solid #fff;">
+    <div style="font-size: 20px;text-align: right;margin-top: 100px;margin-bottom: 50px;margin-right: 120px;">登记编号${num!}号</div>
+    <div style="font-size: 70px;text-align: center;">三亚市公共租赁住房</div>
+    <div style="font-size: 70px;text-align: center;margin-top: 50px;">申</div>
+    <div style="font-size: 70px;text-align: center;margin-top: 20px;">请</div>
+    <div style="font-size: 70px;text-align: center;margin-top: 20px;">审</div>
+    <div style="font-size: 70px;text-align: center;margin-top: 20px;">批</div>
+    <div style="font-size: 70px;text-align: center;margin-bottom: 50px;margin-top: 20px;">表</div>
+    <div style="font-size: 30px;text-align: left;margin-left: 170px;">申&nbsp;&nbsp;&nbsp;请&nbsp;&nbsp;&nbsp;人：
+        <div style="border-bottom: 1px solid #000;height: 50px;width: 415px;float: right;margin-right: 230px;">
+            ${shiro.getUser().name!}
+        </div>
+    </div>
+    <div style="font-size: 30px;text-align: left;margin-left: 170px;margin-top: 20px;">联&nbsp;系&nbsp;电&nbsp;话：
+        <div style="border-bottom: 1px solid #000;height: 50px;width:415px;float: right;margin-right: 230px;">
+            ${apply.applicantPhone!}
+        </div>
+    </div>
+
+    <div style="font-size: 30px;text-align: left;margin-left: 170px;margin-top: 20px;">工作单位/社区居委会：
+        <div style="border-bottom: 1px solid #000;height: 50px;width: 280px;float: right;margin-right: 230px;"></div></div>
+    <div style="font-size: 40px;text-align: center;margin-top: 100px;">三亚市住房和城乡建设局&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;印制</div>
+</div>
+<!--填表说明-->
+<div style="width: 1000px;height: 1480px;border: 1px solid #ffffff;margin-top: 100px;">
+    <div style="font-size: 50px;text-align: center;margin-top: 130px;margin-bottombottom: 100px;">公共租赁住房申请条件<br><br></div>
+    <div style="font-size: 30px;line-height: 3em;width: 830px;margin:0 auto;text-align: justify;" >
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.申请人应年满18周岁；<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.申请人及配偶在三亚市无住房或未租住公房；<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3.两人（含）以上家庭申请，家庭收入符合三亚市人民政府
+        划定的中等或中等以下收入线标准；单身人士申请，上年度可支配收入在城镇职工年平均工资收入以下；<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4.外地来三亚的灵活就业人员或个体商户，除了具备第1、2、3项规定的条件外，还需连续在三亚市缴纳6个月以上的社会保险。
+
+    </div>
+</div>
+
+
+<!--申请人与前两个共同申请人-->
+<div style="width: 1000px;height: 1480px;border: 1px solid #fff;margin-top: 100px;" align="center">
+
+    <table style="width: 940px;height: 1400px;" >
+        <tr class="tableTrClass "  style="height: 100px" >
+            <td colspan="13" style="border-left-style: hidden;border-right: hidden;border-top-style: hidden;"  valign="bottom" align="left" > <p style="font-size: 18px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;此页由申请人填写<p></td>
+        </tr>
+        <tr class="tableTrClass">
+            <td colspan="13">申请人基本情况</td>
+        </tr>
+        <tr class="tableTrClass">
+            <td colspan="3">姓名</td>
+            <td colspan="3">${shiro.getUser().name}</td>
+            <td colspan="2">性别</td>
+            <td colspan="1">
+                @if(apply.applicantSex == "1"){
+                男
+                @}else{
+                女
+                @}
+            </td>
+            <td colspan="1">婚否</td>
+            <td colspan="1">
+                @if(apply.applicantMarry == "1"){
+                已婚
+                @}else{
+                未婚
+                @}
+            </td>
+            <td colspan="2" rowspan="4">
+                @if(apply.MY_PHOTO == null){
+                一</br>
+                寸</br>
+                近</br>
+                期</br>
+                彩</br>
+                照</br>
+                @}else{
+                <img id="avatarPreview" src=" /house/getPhoto?OpTypeNum=${apply.OPTYPENUM!}&RecYear=${apply.RECYEAR!}&RecNum=${apply.RECNUM!}&judge=1" style="z-index: 9; float: left; width: 100px; height: 100px;margin-left: 25px;">
+                @}
+            </td>
+        </tr>
+        <tr class="tableTrClass">
+            <td colspan="3">年龄</td>
+            <td colspan="3">${apply.applicantAge!}</td>
+            <td colspan="2">联系电话</td>
+            <td colspan="3">${apply.applicantPhone!}</td>
+        </tr>
+        <tr class="tableTrClass">
+            <td colspan="3">身份证号</td>
+            <td colspan="8">${shiro.getUser().idCard}</td>
+        </tr>
+        <tr class="tableTrClass">
+            <td colspan="3">职业/工作单位</td>
+            <td colspan="8">${apply.applicantWork!}</td>
+        </tr>
+        <tr class="tableTrClass">
+            <td colspan="3">户口所在地</td>
+            <td colspan="3">${apply.applicantResidence!}</td>
+            <td colspan="3">现住址</td>
+            <td colspan="4">${apply.applicantAdress!}</td>
+
+        </tr>
+
+        <tr class="tableTrClass">
+            <td colspan="3">现居住房屋性质
+            </td>
+            <td colspan="3" >
+                ${apply.applicantNature!}
+            </td>
+            <td colspan="3">本人收入情况</td>
+            <td colspan="4">${apply.applicantAdress!}</td>
+        </tr>
+        <tr class="tableTrClass">
+            <td colspan="3">家庭其它自有住房
+            </td>
+            <td colspan="10" style="text-align: left; padding-left: 20px;">
+                ${apply.applicantOtherHouse!}
+            </td>
+
+        </tr>
+
+        @for(jointApplicant in jointApplicantList1){
+        <tr class="tableTrClass">
+            <td colspan="13">共同申请人基本情况</td>
+        </tr>
+        <tr class="tableTrClass">
+            <td colspan="3">姓名</td>
+            <td colspan="3">${jointApplicant.jointApplicantName}</td>
+            <td colspan="2">性别</td>
+            <td colspan="1">
+                @if(jointApplicant.jointApplicantSex == "1"){
+                男
+                @}else{
+                女
+                @}
+            </td>
+            <td colspan="1">婚否</td>
+            <td colspan="1">
+                @if(jointApplicant.jointApplicantMarry == "1"){
+                已婚
+                @}else{
+                未婚
+                @}
+            </td>
+            <td colspan="2" rowspan="4">
+                @if(jointApplicant.MY_PHOTO == null){
+                一</br>
+                寸</br>
+                近</br>
+                期</br>
+                彩</br>
+                照</br>
+                @}else{
+                <img id="${jointApplicant.jointApplicantId!}Img" src=" /house/getPhoto?OpTypeNum=${apply.OPTYPENUM!}&RecYear=${apply.RECYEAR!}&RecNum=${apply.RECNUM!}&judge=2&FamilyID=${jointApplicant.jointApplicantId!}" style="z-index: 9; float: left; width: 100px; height: 100px;margin-left: 25px;">
+                @}
+            </td>
+        </tr>
+        <tr class="tableTrClass">
+            <td colspan="3">年龄</td>
+            <td colspan="3">${jointApplicant.jointApplicantAge!}</td>
+            <td colspan="2">联系电话</td>
+            <td colspan="3">${jointApplicant.jointApplicantPhone!}</td>
+        </tr>
+        <tr class="tableTrClass">
+            <td colspan="3">身份证号</td>
+            <td colspan="8">${jointApplicant.jointApplicantCard}</td>
+        </tr>
+        <tr class="tableTrClass">
+            <td colspan="3">职业或工作单位</td>
+            <td colspan="8">${jointApplicant.jointApplicantWork!}</td>
+        </tr>
+        <tr class="tableTrClass">
+            <td colspan="3">户口所在地</td>
+            <td colspan="3">${jointApplicant.jointApplicantResidence!}</td>
+            <td colspan="3">现住址</td>
+            <td colspan="4">${jointApplicant.jointApplicantAddress!}</td>
+
+        </tr>
+        <tr class="tableTrClass">
+            <td colspan="3">与申请人关系</td>
+            <td colspan="3">
+                @for(fmt in familyType){
+                @if(fmt.code == jointApplicant.jointApplicantRelation){
+                ${fmt.value!}
+                @}
+                @}
+            </td>
+            <td colspan="3">本人收入情况</td>
+            <td colspan="4">${jointApplicant.jointApplicantIncome!}</td>
+        </tr>
+
+        @}
+    </table>
+</div>
+<!--后三个共同申请人-->
+@if(flage == 1){
+<div style="width: 1000px;height: 1480px;border: 1px solid #fff;margin-top: 100px;" align="center">
+    <table style="width: 940px;height: 1400px;" >
+        <tr class="tableTrClass "  style="height: 100px" >
+            <td colspan="13" style="border-left-style: hidden;border-right: hidden;border-top-style: hidden;"  valign="bottom" align="left" > <p style="font-size: 18px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;此页由申请人填写<p></td>
+        </tr>
+        @for(jointApplicant in jointApplicantList2){
+            <tr class="tableTrClass">
+                <td colspan="13">共同申请人基本情况</td>
+            </tr>
+            <tr class="tableTrClass">
+                <td colspan="3">姓名</td>
+                <td colspan="3">${jointApplicant.jointApplicantName}</td>
+                <td colspan="2">性别</td>
+                <td colspan="1">
+                    @if(jointApplicant.jointApplicantSex == "1"){
+                    男
+                    @}else{
+                    女
+                    @}
+                </td>
+                <td colspan="1">婚否</td>
+                <td colspan="1">
+                    @if(jointApplicant.jointApplicantMarry == "1"){
+                    已婚
+                    @}else{
+                    未婚
+                    @}
+                </td>
+                <td colspan="2" rowspan="4">
+                    @if(jointApplicant.MY_PHOTO == null){
+                        一</br>
+                        寸</br>
+                        近</br>
+                        期</br>
+                        彩</br>
+                        照</br>
+                    @}else{
+                        <img id="${jointApplicant.jointApplicantId!}Img" src=" /house/getPhoto?OpTypeNum=${apply.OPTYPENUM!}&RecYear=${apply.RECYEAR!}&RecNum=${apply.RECNUM!}&judge=2&FamilyID=${jointApplicant.jointApplicantId!}" style="z-index: 9; float: left; width: 100px; height: 100px;margin-left: 25px;">
+                    @}
+                </td>
+            </tr>
+            <tr class="tableTrClass">
+                <td colspan="3">年龄</td>
+                <td colspan="3">${jointApplicant.jointApplicantAge!}</td>
+                <td colspan="2">联系电话</td>
+                <td colspan="3">${jointApplicant.jointApplicantPhone!}</td>
+            </tr>
+            <tr class="tableTrClass">
+                <td colspan="3">身份证号</td>
+                <td colspan="8">${jointApplicant.jointApplicantCard}</td>
+            </tr>
+            <tr class="tableTrClass">
+                <td colspan="3">职业或工作单位</td>
+                <td colspan="8">${jointApplicant.jointApplicantWork!}</td>
+            </tr>
+            <tr class="tableTrClass">
+                <td colspan="3">户口所在地</td>
+                <td colspan="3">${jointApplicant.jointApplicantResidence!}</td>
+                <td colspan="3">现住址</td>
+                <td colspan="4">${jointApplicant.jointApplicantAddress!}</td>
+
+            </tr>
+            <tr class="tableTrClass">
+                <td colspan="3">与申请人关系</td>
+                <td colspan="3">
+                    @for(fmt in familyType){
+                        @if(fmt.code == jointApplicant.jointApplicantRelation){
+                            ${fmt.value!}
+                        @}
+                    @}
+                </td>
+                <td colspan="3">本人收入情况</td>
+                <td colspan="4">${jointApplicant.jointApplicantIncome!}</td>
+            </tr>
+        @}
+    </table>
+</div>
+@}
+<!--申请理由和承诺书-->
+<div style="width: 1000px;height: 1480px;border: 1px solid #fff;margin-top: 100px;"  align="center">
+    <table style="width: 940px;height: 1380px;" >
+        <tr class="tableTrClass "  style="height: 100px" >
+            <td colspan="100" style="border-left-style: hidden;border-right: hidden;border-top-style: hidden;"  valign="bottom" align="left" > <p style="font-size: 18px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;此页由申请人填写<p></td>
+        </tr>
+        <tr class="tableTrClass">
+            <td  rowspan="3" colspan="15">拟<br>申<br>请<br>房<br>屋<br>情<br>况</td>
+            <td  c colspan="18">区域范围</td>
+            <td  c colspan="67">
+                @if(apply.applicantReason.regional == '1'){
+                    中心城区
+                @}else if(apply.applicantReason.regional == '2'){
+                    海棠区
+                @}else if(apply.applicantReason.regional == '3'){
+                    崖州区
+                @}else{
+                    中心城区<input type="checkbox">
+                    海棠区<input type="checkbox">
+                    崖州区<input type="checkbox">
+                @}
+            </td>
+        </tr>
+        <tr class="tableTrClass">
+            <td  c colspan="18">申请方式</td>
+            <td  c colspan="67">
+                @if(apply.applicantReason.application_mode == '1'){
+                家庭
+                @}else if(apply.applicantReason.application_mode == '2'){
+                多人合租
+                @}else if(apply.applicantReason.application_mode == '3'){
+                单身人士
+                @}else{
+                    家庭<input type="checkbox">
+                    多人合租<input type="checkbox">（人数______）
+                    单身人士<input type="checkbox">
+                @}
+            </td>
+        </tr>
+        <tr class="tableTrClass">
+            <td  c colspan="18">户型</td>
+            <td  c colspan="67">
+                @if(apply.applicantReason.apartment == '1'){
+                    单间配套
+                @}else if(apply.applicantReason.apartment == '2'){
+                    一室一厅
+                @}else if(apply.applicantReason.apartment == '3'){
+                    二室一厅
+                @}else{
+                    单间配套<input type="checkbox">
+                    一室一厅<input type="checkbox">
+                    两室一厅<input type="checkbox">
+                @}
+            </td>
+        </tr>
+
+        <tr class="tableTrClass" style="height: 90px;">
+            <td colspan="100"><span style="font-family: 黑体, SimHei;font-size: 30px">申请理由</span>（申请人详细说明家庭上年度年收入、住房情况）</td>
+        </tr>
+        <tr class="tableTrClass" style="height:500px;">
+            <td colspan="100" style="height: 300px;"><textarea class="tableInputClass" readonly>${apply.applicantReason.reason!}</textarea></td>
+        </tr>
+        <tr class="tableTrClass" style="height: 250px;">
+            <td colspan="100" style="border-bottom: 0px;padding:0 20px; text-align: left;">
+                <p style="text-align: center;font-size: 40px;"><span style="font-family: 黑体, SimHei;">承&nbsp;诺&nbsp;书</span><p>
+                <br>
+                <p style="font-size: 25px;text-align: justify;line-height: 1.5em;">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;本人承诺所提供的家庭成员基本情况及住房、收入等情况真实有效，并严 <br>格遵守保障性住房的有关规定。如隐瞒、虚报、
+                    谎报有关情况，主管部门有权 <br>终止其享受保障性住房资格，并承担相应的法律责任。</p>
+                <br>
+                <br>
+
+            </td>
+        </tr>
+        <tr class="tableTrClass"  style="font-size: 25px" >
+            <td colspan="16" style="border:none;">
+                <p>申请人：</p>
+            </td>
+            <td colspan="16" style="border:none;text-align: left;">
+                <p>${apply.applicantReason.promise_applicant!}</p>
+            </td>
+            <td colspan="15" style="border:none;">
+                <p>配偶：</p>
+            </td>
+            <td colspan="15" style="border:none;text-align: left;">
+                <p>${apply.applicantReason.promise_spouse!}</p>
+            </td>
+            <td colspan="15" style="border:none;">
+                <p>时间：</p>
+            </td>
+            <td colspan="23" style="border:none;text-align: left;">
+                <p>${apply.applicantReason.promise_time!}</p>
+            </td>
+        </tr>
+    </table>
+</div>
+<!--工作、收人和住房证明-->
+<div style="width: 1000px;height: 1480px;border: 1px solid #fff;margin-top: 100px;" align="center">
+    <div style="font-size: 50px;text-align: center;margin-top: 30px">工作、收人和住房证明</div>
+    <table style="width: 940px;height: 1150px;" >
+        <tr class="tableTrClass "  style="height: 50px" >
+            <td colspan="100" style="border-left-style: hidden;border-right: hidden;border-top-style: hidden;"  valign="bottom" align="left" > <p style="font-size: 18px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;此页由申请人单位/居委会经办人员填写<p></td>
+        </tr>
+        <tr class="tableTrClass">
+            <td colspan="18">
+                姓名
+            </td>
+            <td colspan="20">
+
+            </td>
+            <td colspan="16">
+                性别
+            </td>
+            <td colspan="18">
+
+            </td>
+            <td colspan="8">
+                婚姻<br>
+                状况
+            </td>
+            <td colspan="20">
+
+            </td>
+        </tr>
+
+        <tr class="tableTrClass">
+            <td colspan="18">
+                身份证号
+            </td>
+            <td colspan="36">
+
+            </td>
+            <td colspan="8">
+                暂住<br>
+                证号
+            </td>
+            <td colspan="38">
+
+            </td>
+
+        </tr>
+
+        <tr class="tableTrClass">
+            <td colspan="18">
+                工作单位
+            </td>
+            <td colspan="20">
+
+            </td>
+            <td colspan="16">
+                工作时间
+            </td>
+            <td colspan="46">
+                _____年_____月至_____年_____月
+            </td>
+
+        </tr>
+
+        <tr class="tableTrClass">
+            <td colspan="18">
+                户口所在地
+            </td>
+            <td colspan="82">
+
+            </td>
+        </tr>
+
+        <tr class="tableTrClass">
+            <td colspan="18">
+                单位性质
+            </td>
+            <td colspan="82">
+                企业<input type="checkbox">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                国业<input type="checkbox">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                事业<input type="checkbox">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                政府机关<input type="checkbox">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </td>
+        </tr>
+
+        <tr class="tableTrClass">
+            <td colspan="18">
+                人员类型
+            </td>
+            <td colspan="82">
+                在编<input type="checkbox">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                合同<input type="checkbox">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                退休<input type="checkbox">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                其他<input type="checkbox">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </td>
+        </tr>
+
+        <tr class="tableTrClass">
+            <td colspan="18">
+                收人情况
+            </td>
+            <td colspan="31">
+                工薪收人________元/月
+            </td>
+
+            <td colspan="20">
+                来本单位<br>
+                工作时间
+            </td>
+            <td colspan="31">
+                ____年_____月_____日
+            </td>
+        </tr>
+
+
+        <tr class="tableTrClass">
+            <td colspan="28">
+                劳动合同签订年限
+            </td>
+
+            <td colspan="72" style="text-align: left;padding-left: 20px;">
+                _____年_____月至_____年_____月
+            </td>
+        </tr>
+
+        <tr class="tableTrClass">
+            <td colspan="28">
+                社会保险缴纳情况
+            </td>
+
+            <td colspan="72" style="text-align: left;padding-left: 20px;">
+                是<input type="checkbox">（缴纳时间_____年_____月至今）&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;否<input type="checkbox">
+            </td>
+        </tr>
+
+
+        <tr class="tableTrClass">
+            <td colspan="28">
+                现住房性质
+            </td>
+
+            <td colspan="72" style="text-align: left;padding-left: 20px;">
+                租住私房、<input type="checkbox">
+                借住私房、<input type="checkbox">
+                租住单位公房、<input type="checkbox">
+                借住单位公房<input type="checkbox">
+            </td>
+        </tr>
+
+        <tr class="tableTrClass">
+
+            <td colspan="100">
+
+                <div style="margin-top: 60px;text-align: left">
+                    &nbsp;&nbsp;&nbsp;&nbsp;经办人：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+                    单位（公章）： &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </div>
+                <div style="margin-top: 10px;text-align: left">
+                    &nbsp;&nbsp;&nbsp;&nbsp;联系电话： &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </div>
+                <div style="text-align: right;margin-top: 60px;margin-bottom: 60px;">
+                    年 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+                    月 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+                    日 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+                </div>
+            </td>
+        </tr>
+    </table>
+    <div style="font-size: 18px;line-height: 1.5em;width: 830px;margin:0 auto;text-align: justify;">
+
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;说明事项:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1、此证明由公共租赁住房申请人所在工作单位出具；<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2、收入包括工资薪金、奖金、年终加薪、劳动分红、津贴、补贴、养老金、其他劳动所得，<br>&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;不包括基本养老保险费、基本医疗保险费等；<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3、“人员类别”中勾选“合同”的需写明“劳动合同签订年限”，其余人员无需填写；<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4、出具证明单位应如实填写相关情况，若情况发生变化，请及时告知公共租赁住房主管部门。<br>
+
+
+    </div>
+</div>
+
+<!--审核意见-->
+<div style="width: 1000px;height: 1450px;border: 1px solid #fff;margin-top: 100px;" align="center">
+    <div style="font-size: 50px;text-align: center;margin-top: 30px">审核意见</div>
+    <table style="width: 940px;height: 1280px;margin-top: 30px;" >
+        <tr class="tableTrClass">
+            <td colspan="2" style="height: 300px;">单位（居委会）<br>初审意见
+            </td>
+            <td colspan="10" style="text-align: left;">
+                <div>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;经审查，并张榜公示________天，无异议。
+                    同意________________同志家庭申请公共<br>租赁住房.
+                </div>
+                <div style="margin-top: 60px;">
+                    &nbsp;&nbsp;&nbsp;&nbsp; 经办人： &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    负责人： &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    盖章： &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                </div>
+
+                <div style="text-align: right;margin-top: 40px;">
+                    年 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+                    月 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+                    日 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+                </div>
+            </td>
+        </tr>
+
+
+        <tr class="tableTrClass">
+            <td colspan="2" style="height: 300px;">上级单位复核意见<br>(无上级单位的无需填写)
+            </td>
+            <td colspan="10" style="text-align: left;">
+                <div>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;情况属实，同意申报
+                </div>
+                <div style="margin-top: 60px;">
+                    &nbsp;&nbsp;&nbsp;&nbsp; 经办人： &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    负责人： &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    单位盖章： &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                </div>
+
+                <div style="text-align: right;margin-top: 40px;">
+                    年 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+                    月 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+                    日 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+                </div>
+            </td>
+        </tr>
+
+        <tr class="tableTrClass">
+            <td rowspan="2" colspan="1">
+                市<br>
+                住<br>
+                房<br>
+                和<br>
+                城<br>
+                乡<br>
+                建<br>
+                设<br>
+                局<br>
+                审<br>
+                批<br>
+                意<br>
+                见<br>
+                <br>
+            </td>
+            <td colspan="1">
+                初<br>审
+            </td>
+            <td colspan="10" style="text-align: left;">
+                <div style="margin-top: 30px;">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;经审查，并张榜公示________天，无异议。
+                    ________________同志家庭符合公共租赁住房<br>申请条件，同意申请、
+                </div>
+                <div style="margin-top: 50px;">
+                    &nbsp;&nbsp;&nbsp;&nbsp; 经办人： &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    复核人： &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </div>
+
+                <div style="text-align: right;margin-top: 40px;">
+                    年 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+                    月 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+                    日 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+                </div>
+            </td>
+        </tr>
+
+        <tr class="tableTrClass">
+            <td colspan="1" >审<br>批
+            </td>
+            <td colspan="10" style="text-align: left;">
+                <div style="margin-top: 30px;">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;同意初审意见，轮候配租。
+                </div>
+                <div style="margin-top: 50px;">
+                    &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; 负责人： &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; 单位盖章 ：
+
+                </div>
+
+                <div style="text-align: right;margin-top: 40px;">
+                    年 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+                    月 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+                    日 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+                </div>
+            </td>
+        </tr>
+        <tr class="tableTrClass">
+            <td colspan="2" style="height: 100px;">备<br>注
+            </td>
+            <td colspan="10" style="text-align: left;">
+                <div>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </div>
+
+            </td>
+        </tr>
+    </table>
+</div>
+
+
+

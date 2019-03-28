@@ -1,0 +1,181 @@
+@layout("/common/_container.html"){
+<style type="text/css">
+    .dataTable{
+        width: 100%
+    }
+    .dataTable thead{
+        background: #ebf0f6;
+    }
+    .dataTable thead th{
+        padding: 10px 0;
+        text-align:center;
+    }
+    .dataTable tbody td{
+        padding: 8px 0;
+        text-align:center;
+        word-break:break-all;
+        white-space : normal;
+    }
+    table,table tr th, table tr td {
+        border:1px solid #bababa;
+    }
+
+    .m-t-30{
+        margin-top:30px;
+    }
+    .d-title{
+        width: 100%;height: 30px;padding-left: 30px;background: #eee;line-height:30px;font-weight: bold;margin-bottom:20px;
+    }
+    .tableTrClass{
+        text-align: center;
+        height: 60px;
+        font-size: 20px;
+    }
+    table{
+        border-spacing:0;
+        cellpadding:0;
+        cellspacing:0;
+    }
+    .tableInputClass{
+        border: 0px;
+        outline:none;
+        width:100%;
+        height: 100%;
+        margin-left: 5px;
+    }
+
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+    }
+    input[type="number"]{
+        -moz-appearance: textfield;
+    }
+</style>
+
+<style>
+    .watermark{
+        opacity: 0.1;
+        position: fixed;
+        height: 270px;
+        width: 960px;
+        font-size: 95px;
+        transform: rotate(315deg);
+        -ms-transform: rotate(315deg);
+        -moz-transform: rotate(315deg);
+        -webkit-transform: rotate(315deg);
+        -o-transform: rotate(315deg);
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        pointer-events: none;
+    }
+
+    .watermark p{
+        color: #000000;
+    }
+</style>
+
+
+<div style="width: 1000px;text-align: center;">
+<#button btnCss="info" name="打印" id="exportPdf" icon="fa-check" clickFun="savePDF()"/>
+</div>
+    <div id="titleTr"></div>
+    @if(applyType == 1){
+        <!--申请公租房打印页面-->
+        @layout("/supporthouse/public_pdf.html"){
+        @}
+    @}else{
+    <!--限价房-->
+        @if(isCivilServant == 0){
+            <!--市民申请限价商品房打印页面-->
+            @layout("/supporthouse/price_pdf.html"){
+            @}
+        @}else{
+            <!--公务员申请限价商品房打印页面-->
+            @layout("/supporthouse/price_pdf2.html"){
+            @}
+        @}
+    @}
+</div>
+
+
+<script src="${ctxPath}/static/js/qrcode.js"></script>
+<script src="${ctxPath}/static/js/html2canvas.js"></script>
+<script src="${ctxPath}/static/js/jsPdf.debug.js"></script>
+<script type="text/javascript">
+    function savePDF() {
+        $("#exportPdf").hide();
+        window.print();
+    }
+</script>
+
+
+<script type="text/javascript">
+    var name = '${shiro.getUser().name}';
+    var idCard = '${shiro.getUser().idCard}';
+    var num = '${num}';
+    $(function(){
+        $("#titleTr").append("<div>" +
+            "<div style='width: 15%;float: left;'>"+
+            create_qrcode(
+                "编号："+num+
+                "\n姓名："+name+
+                "\n身份证号："+idCard, 9, "H", 4)+
+            "</div>");
+        $("#titleTr").append();
+        $("#titleTr").find("img").width("140px");
+        $("#titleTr").find("img").height("140px");
+        createWaterMark("三亚住房保障管理中心");
+    });
+
+    /**
+     * 水印
+     */
+    function createWaterMark(name){
+        if(!name){
+            return ;
+        }
+        var width = document.body.clientWidth;
+        var height = document.body.clientHeight;
+
+        var init_top = height/2;
+        var dif_heigth = 0;
+        if(height<1000){
+            dif_heigth = height/3;
+        }else {
+            dif_heigth = height/8;
+        }
+        for(var j=0;j<1;j++){
+            for(var i=0;i<4;i++){
+                var div =document.createElement("div");
+                var p = document.createElement("p");
+                p.innerHTML = name+getCurDate();
+                div.setAttribute("class","watermark");
+                div.style.marginLeft = (20+(i*width/1))+"px";
+                div.style.top = (init_top+j*dif_heigth)+"px";
+
+                div.appendChild(p);
+                document.body.appendChild(div);
+            }
+        }
+    }
+    //获取当前日期
+    function getCurDate() {
+        var date = new Date();
+        var seperator1 = "-";
+        var month = date.getMonth() + 1;
+        var strDate = date.getDate();
+        if (month >= 1 && month <= 9) {
+            month = "0" + month;
+        }
+        if (strDate >= 0 && strDate <= 9) {
+            strDate = "0" + strDate;
+        }
+        var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate;
+        return currentdate;
+    }
+</script>
+@}

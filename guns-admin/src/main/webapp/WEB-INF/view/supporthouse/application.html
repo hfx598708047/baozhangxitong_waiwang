@@ -1,0 +1,28 @@
+@layout("/common/_container.html"){
+<style>
+    .buttonClass{
+        font-size: 40px;
+        border-radius: 10px;
+
+    }
+</style>
+<div class="row">
+    <div class="col-sm-12" style="text-align: center;margin-top: 5%;">
+        <button onclick="createProject(1);" class="buttonClass btn-primary">公租房申请</button>
+    </div>
+    <div class="col-sm-12" style="text-align: center;margin-top: 5%;">
+        <button onclick="createProject(4);" class="buttonClass btn-primary">公租房申请（公务员）</button>
+    </div>
+    <div class="col-sm-12" style="text-align: center;margin-top: 5%;">
+        <button onclick="createProject(2);" class="buttonClass btn-primary">限价房申请</button>
+    </div>
+    <div class="col-sm-12" style="text-align: center;margin-top: 5%;">
+        <button onclick="createProject(3);" class="buttonClass btn-primary">住房补贴申请</button>
+    </div>
+</div>
+
+
+
+<script src="${ctxPath}/static/modular/supporthouse/house_application.js"></script>
+
+@}

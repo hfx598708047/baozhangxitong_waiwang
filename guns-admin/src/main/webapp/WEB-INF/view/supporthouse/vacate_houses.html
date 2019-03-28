@@ -1,0 +1,360 @@
+@layout("/common/_container.html"){
+<style>
+    .info-title{
+        font-size: 16px;padding:5px 0 5px 5px; background: #0e9aef;color:#fff;margin:5px 0;
+    }
+    #houseTable{
+        width: 100%;
+    }
+    #houseTable th,#houseTable td{
+        border: 1px solid #0e9aef;
+        text-align: center;
+        height: 30px;
+        color:#0000ff;
+    }
+    #houseTable th{
+        background: #a8e4ff;
+    }
+    #houseTable th:first-child,#houseTable td:first-child{
+        background: #a8e4ff;
+        width:35px;
+    }
+    .floor_selected{
+        background-color: #ffc600;
+    }
+    ul{
+        list-style:none;
+        margin: 0px;
+        padding: 0px;
+        width: 100%;
+        height: 100%;
+    }
+    ul li{
+        float:left; /* 向左漂移，将竖排变为横排 */
+        border-right: 1px solid #0e9aef;
+        height: 100%;
+    }
+</style>
+<style type="text/css">
+    .dataTable{
+        width: 100%
+    }
+    .dataTable thead{
+        background: #ebf0f6;
+    }
+    .dataTable thead th{
+        padding: 10px 0;
+        text-align:center;
+    }
+    .dataTable tbody td{
+        padding: 8px 0;
+        text-align:center;
+        word-break:break-all;
+        white-space : normal;
+    }
+    table,table tr th, table tr td {
+        border:1px solid #bababa;
+    }
+
+    .m-t-30{
+        margin-top:30px;
+    }
+    .d-title{
+        width: 100%;height: 30px;padding-left: 30px;background: #eee;line-height:30px;font-weight: bold;margin-bottom:20px;
+    }
+    .tableTrClass{
+        text-align: center;
+        height: 40px;
+        font-size: 20px;
+    }
+    table{
+        border-spacing:0;
+        cellpadding:0;
+        cellspacing:0;
+    }
+    .tableInputClass{
+        border: 0px;
+        outline:none;
+        width:100%;
+        height: 100%;
+        margin-left: 5px;
+    }
+
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+    }
+    input[type="number"]{
+        -moz-appearance: textfield;
+    }
+</style>
+
+<div class="panel blank-panel">
+    <div class="panel-heading">
+        <div class="panel-options">
+            <ul class="nav nav-tabs">
+                <li class="active">
+                    <a data-toggle="tab" href="#tab-1">房屋信息</a>
+                </li>
+                <li>
+                    <a data-toggle="tab" href="#tab-2">材料</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="panel-body">
+        <div class="tab-content">
+
+            <div id="tab-1" class="tab-pane active">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content">
+                        <div class="row row-lg">
+                            <form action="#" method="post" class="form-horizontal" id="vacateInfoForm">
+                                <div class="col-sm-12">
+                                    <div class="col-sm-6">
+                                        <div class="input-group">
+                                            <div class="input-group-btn">
+                                                <button data-toggle="dropdown" class="btn btn-white dropdown-toggle"
+                                                        type="button">证件号
+                                                </button>
+                                            </div>
+                                            <input class="form-control" id="idCard" name="idCard" value='${shiro.getUser().idCard}' placeholder="${placeholder!}" type="text" readonly/>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="row">
+                                            <div class="col-lg-12 col-sm-12">
+                                                    <#button name="搜索" icon="fa-search" clickFun="houseSearch('${apply.OPTYPENUM!}','${apply.RECYEAR!}','${apply.RECNUM!}')"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            <div style="clear: both"></div>
+                            <div class="d-title">
+                                房屋信息
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="col-sm-2 form-group">
+                                    <label class="col-sm-12 control-label">房名</label>
+                                </div>
+                                <div class="col-sm-10 form-group">
+                                    <div class="col-sm-12">
+                                        <input class="form-control" id="roomNum" name="roomNum" type="text" value="${apply.applicantName!}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="col-sm-6 form-group">
+                                    <label class="col-sm-3 control-label">权利人</label>
+                                    <div class="col-sm-9">
+                                        <input class="form-control" id="obligee" name="obligee" type="text" value="${apply.applicantSex!}">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 form-group">
+                                    <label class="col-sm-3 control-label">购买价格</label>
+                                    <div class="col-sm-9">
+                                        <input class="form-control" id="bargainTotalprice" name="bargainTotalprice" type="text" value="${apply.applicantSex!}">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12">
+                                <div class="col-sm-6 form-group">
+                                    <label class="col-sm-3 control-label">房屋用途</label>
+                                    <div class="col-sm-9">
+                                        <input class="form-control" id="usage" name="usage" type="text" value="${apply.applicantCard!}">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 form-group">
+                                    <label class="col-sm-3 control-label">规划用途</label>
+                                    <div class="col-sm-9">
+                                        <input class="form-control" id="layout" name="layout" type="text" value="${apply.applicantPhone!}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="col-sm-6 form-group">
+                                    <label class="col-sm-3 control-label">建筑结构</label>
+                                    <div class="col-sm-9">
+                                        <input class="form-control" id="architStructcode" name="architStructcode" type="text" value="${apply.OWNERNAME_PEIOU!}">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 form-group">
+                                    <label class="col-sm-3 control-label">房屋户型</label>
+                                    <div class="col-sm-9">
+                                        <input class="form-control" id="houseType" name="houseType" type="text" value="${apply.OWNERSEXCODE_PEIOU!}">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12">
+                                <div class="col-sm-6 form-group">
+                                    <label class="col-sm-3 control-label">建筑面积</label>
+                                    <div class="col-sm-9">
+                                        <input class="form-control" id="architArea" name="architArea" type="text" value="${apply.OWNERCERTNUM_PEIOU!}">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 form-group">
+                                    <label class="col-sm-3 control-label">套内面积</label>
+                                    <div class="col-sm-9">
+                                        <input class="form-control" id="roomArea" name="roomArea" type="text" value="${apply.OWNERCERTNUM_PEIOU!}">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12">
+                                <div class="col-sm-6 form-group">
+                                    <label class="col-sm-3 control-label">分摊面积</label>
+                                    <div class="col-sm-9">
+                                        <input class="form-control" id="apportArea" name="apportArea" type="text" value="${apply.OWNERCERTNUM_PEIOU!}">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 form-group">
+                                    <label class="col-sm-3 control-label">房屋性质</label>
+                                    <div class="col-sm-9">
+                                        <input class="form-control" id="houseProp" name="houseProp" type="text" value="${apply.OWNERCERTNUM_PEIOU!}">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12">
+                                <div class="col-sm-2 form-group">
+                                    <label class="col-sm-12 control-label">房屋坐落</label>
+                                </div>
+                                <div class="col-sm-10 form-group">
+                                    <div class="col-sm-12">
+                                        <input class="form-control" id="sitnumGather" name="sitnumGather" type="text" value="${apply.OWNERCERTNUM_PEIOU!}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row btn-group-m-t">
+                                <div class="col-sm-10" style="text-align: center">
+                                    <#button btnCss="info" name="保存" id="saveFamilySurveyButton" icon="fa-check" clickFun="saveFamilySurveyFunction()"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="tab-2" class="tab-pane">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-content">
+                                <div class="row row-lg">
+                                    <div class="col-sm-12">
+                                        <button class="btn btn-primary " style="font-size: 15px;" onclick="addUploadTable('${apply.OPTYPENUM!}','${apply.RECYEAR!}','${apply.RECNUM!}','uploadTbody');">+</button>
+                                        <form action="#" method="post" class="form-horizontal" id="uploadTbodyForm">
+                                            <table class="dataTable" data-mobile-responsive="true" data-click-to-select="true">
+                                                <thead>
+                                                <tr>
+                                                    <th><input type="checkbox"></th>
+                                                    <th>材料名称</th>
+                                                    <th>类别</th>
+                                                    <th>份数</th>
+                                                    <th>页数</th>
+                                                    <th>页码</th>
+                                                    <th>附件上传</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody id="uploadTbody">
+                                                @for(arch in archList){
+                                                <tr>
+                                                    <input type="hidden" name="optypenum[]" value='${apply.OPTYPENUM!}'>
+                                                    <input type="hidden" name="recyear[]" value='${apply.RECYEAR!}'>
+                                                    <input type="hidden" name="recnum[]" value='${apply.RECNUM!}'>
+                                                    <input type="hidden" name="recmatnum[]" value="${arch.RECMATNUM!}">
+                                                    <td>
+                                                        @if(arch.ISRECEIVE == null){
+                                                        <input type="checkbox" value="${arch.RECMATNUM!}">
+                                                        @}else if(arch.ISRECEIVE == 1){
+                                                        <input type="checkbox" checked="checked" value="${arch.RECMATNUM!}">
+                                                        @}
+                                                    </td>
+                                                    <td><input class="tableInputClass" type="text" name="matname[]" value="${arch.MATNAME!}"></td>
+                                                    <td>
+                                                        <select class="form-control" name="mattypecode[]">
+                                                            @for(node in materialList){
+                                                            @if(arch.MATTYPECODE == node.code){
+                                                            <option value="${node.code!}" selected>${node.value!}</option>
+                                                            @}else{
+                                                            <option value="${node.code!}">${node.value!}</option>
+                                                            @}
+                                                            @}
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        @if(arch.MATCOUNT == null){
+                                                        <input class="tableInputClass" type="text" value="1" name="matcount[]">
+                                                        @}else {
+                                                        <input class="tableInputClass" type="text" value="${arch.MATCOUNT!}" name="matcount[]">
+                                                        @}
+
+                                                    </td>
+                                                    <td>
+                                                        @if(arch.MATPAGE == null){
+                                                        <input class="tableInputClass" type="text" value="1" name="matpage[]">
+                                                        @}else {
+                                                        <input class="tableInputClass" type="text" value="${arch.MATPAGE!}" name="matpage[]">
+                                                        @}
+                                                    </td>
+                                                    <td><input class="tableInputClass" type="text" name="matkindcode[]" value="${arch.MATCERTNUM!}"></td>
+                                                    <td>
+                                                        <button type="button" onclick="openUploadPage('${apply.OPTYPENUM!}','${apply.RECYEAR!}','${apply.RECNUM!}','${arch.RECMATNUM!}')">上传</button>
+                                                        <button type="button" onclick="openImagePage('${apply.OPTYPENUM!}','${apply.RECYEAR!}','${apply.RECNUM!}','${arch.RECMATNUM!}')">查看</button>
+                                                    </td>
+                                                </tr>
+                                                @}
+                                                </tbody>
+                                            </table>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="row btn-group-m-t">
+                                    <div class="col-sm-10" style="text-align: center">
+                                        <#button btnCss="info" name="保存" id="arch_save" icon="fa-check" clickFun="saveRecOpinions()"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-top: 10px;">
+                <#button btnCss="danger" name="关闭" id="cancel" icon="fa-eraser" clickFun="closeLayer()"/>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var readonly = Feng.getQueryString("readonly");
+    var materialListJson = '${materialListJson}';
+    materialListJson = JSON.parse(materialListJson);
+    var familyTypeJson = '${familyTypeJson}';
+    familyTypeJson = JSON.parse(familyTypeJson);
+    if(readonly == 'true'){
+        $("#projectInfoForm input").attr("readonly","readonly");
+        $("#ensure").attr("disabled","disabled");
+        $("#tab-2").find("input").attr("readonly","readonly");
+        $("#tab-2").find("button").attr("disabled","disabled");
+    }
+</script>
+<script src="${ctxPath}/static/modular/supporthouse/house_application.js"></script>
+<script src="${ctxPath}/static/modular/supporthouse/vacate_houses.js"></script>
+<script>
+    var houseJson = '${houseJson!}';
+    if(houseJson != ''){
+        houseJson = JSON.parse(houseJson);
+    }
+    var buildingStructureListJson = '${buildingStructureListJson!}';
+    buildingStructureListJson = JSON.parse(buildingStructureListJson);
+    var houseTypeListJson = '${houseTypeListJson!}';
+    houseTypeListJson = JSON.parse(houseTypeListJson);
+    var houseuSageListJson = '${houseuSageListJson!}';
+    houseuSageListJson = JSON.parse(houseuSageListJson);
+</script>
+@}

@@ -1,0 +1,93 @@
+@layout("/common/_container.html"){
+<div class="row">
+    <div class="col-sm-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>个人业务</h5>
+            </div>
+            <div class="ibox-content">
+                <div id="buttonDiv">
+
+                </div>
+            <!--    <div class="col-sm-4" >
+                    <div class="input-group">
+                        <div class="input-group-btn">
+                            <button data-toggle="dropdown" class="btn btn-white dropdown-toggle" type="button">
+                                收件日期
+                            </button>
+                        </div>
+                        <input style="width:120px;" type="text" class="form-control layer-date" id="beginTime"/>
+                        <span style="float: left;padding: 6px 5px 0 5px;">至</span>
+                        <input style="width:120px;margin-right: 8px;" type="text" class="form-control layer-date" id="endTime"/>
+                        <#button name="查询" icon="fa-search" clickFun="houseProject.query()"/>
+                    </div>
+                </div>-->
+                <div class="row row-lg">
+                    <div class="col-sm-12">
+                        <#table id="HouseProjectTable"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- 模态框 -->
+<div class="modal fade" id="typeOtherModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="close" data-dismiss='modal'>×</button>
+                <h4 class="modal-title">类型选择</h4>
+            </div>
+            <div class="modal-body">
+                <div class="col-sm-12">
+                    <label class="col-sm-3 control-label">证件类型</label>
+                    <div class="col-sm-9">
+                        <select class="form-control" id="typeOther" name="typeOther">
+                            <option value="2">市直机关</option>
+                            <option value="2">财政供养人员</option>
+                            <option value="4">企事业人员</option>
+                            <option value="4">社区</option>
+                            <option value="4">待业</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" style="margin-top: 8px;">
+                <#button btnCss="info" name="确定" id="chooseType" icon="fa-check" clickFun="fixedHouseType('typeOther');"/>
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+<script src="${ctxPath}/static/modular/supporthouse/house_project.js"></script>
+<script src="${ctxPath}/static/modular/supporthouse/house_application.js"></script>
+<script>
+    var sRECSTATECODE = "${sRECSTATECODE!}";
+    $(function () {
+        if(sRECSTATECODE == 0){
+            var str = '<div class="col-sm-8" style="text-align: center;">' +
+                '                    <button onclick="createProject(1);" class="btn btn-primary">公租房申请</button>' +
+                '                    <button onclick="openChoose();" class="btn btn-primary">限价房申请</button>' +
+                '                    <button onclick="createProject(3);" class="btn btn-primary">住房补贴申请</button>' +
+                '      </div>';
+            $("#buttonDiv").append(str);
+        }
+    })
+    function openChoose(){
+        $("#typeOtherModal").modal("show");
+    }
+
+    //限价房区分公务员和市民
+    function fixedHouseType(selectId){
+        var type = $("#"+selectId).val();
+        $("#typeOtherModal").modal("hide");
+        createProject(type);
+    }
+
+</script>
+
+@}

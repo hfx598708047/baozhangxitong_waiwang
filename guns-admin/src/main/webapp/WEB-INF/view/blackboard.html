@@ -1,0 +1,72 @@
+@layout("/common/_container.html"){
+<style>
+	.buttonClass{
+		font-size: 40px;
+		border-radius: 10px;
+
+	}
+</style>
+<div class="row">
+	<div class="col-sm-12" style="text-align: center;margin-top: 8%;">
+		<button onclick="createProject(1);" class="buttonClass btn-primary">公租房申请</button>
+	</div>
+	<div class="col-sm-12" style="text-align: center;margin-top: 8%;">
+		<button onclick="openChoose();" class="buttonClass btn-primary">限价房申请</button>
+	</div>
+
+	<div class="col-sm-12" style="text-align: center;margin-top: 8%;">
+		<button onclick="createProject(3);" class="buttonClass btn-primary">住房补贴申请</button>
+	</div>
+
+</div>
+
+<div id="ewmDIv">
+
+</div>
+
+<!-- 模态框 -->
+<div class="modal fade" id="typeOtherModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button class="close" data-dismiss='modal'>×</button>
+				<h4 class="modal-title">类型选择</h4>
+			</div>
+			<div class="modal-body">
+				<div class="col-sm-12">
+					<label class="col-sm-3 control-label">证件类型</label>
+					<div class="col-sm-9">
+						<select class="form-control" id="typeOther" name="typeOther">
+							<option value="2">市直机关</option>
+							<option value="2">财政供养人员</option>
+							<option value="4">企事业人员</option>
+							<option value="4">社区</option>
+							<option value="4">待业</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer" style="margin-top: 8px;">
+				<#button btnCss="info" name="确定" id="chooseType" icon="fa-check" clickFun="fixedHouseType('typeOther');"/>
+				<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal -->
+</div>
+<script src="${ctxPath}/static/modular/supporthouse/house_application.js"></script>
+<script>
+	function openChoose(){
+		$("#typeOtherModal").modal("show");
+	}
+
+    //限价房区分公务员和市民
+    function fixedHouseType(selectId){
+        var type = $("#"+selectId).val();
+        $("#typeOtherModal").modal("hide");
+        createProject(type);
+    }
+
+</script>
+
+
+@}

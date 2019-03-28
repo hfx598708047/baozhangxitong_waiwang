@@ -1,0 +1,80 @@
+@layout("/common/_container.html"){
+
+<style type="text/css">
+
+    #content_right{
+        float:left;
+        border:1px solid #e0e0e0;
+        width: 20%;
+        height: 600px;
+        overflow-y: auto
+    }
+    #content_right li{
+        list-style-type:none;
+        text-align: center;
+    }
+    #content_right ul img{
+        width:150px;
+        height: 100px;
+        border:1px solid #e0e0e0;
+    }
+    #content_right ul img:hover{
+        cursor:pointer;
+    }
+    #content_left{
+        float: left;
+        width: 80%;
+        height: 600px;
+    }
+    #content_right_det{
+        overflow: auto;
+        width:95%;
+        height: 600px;
+        position: relative;
+        border:1px solid #e0e0e0;
+    }
+    #content_right_det img {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+    }
+
+    #content_right .active{
+        border:3px solid darkred;
+    }
+</style>
+
+<div style="width: 100%">
+    <div id="content_right">
+        <ul>
+            @for(var i=0;i<imageIdList.~size;i++){
+            <li>
+                @if(i == 0){
+                <img class="active" src="/get_file?imageid=${imageIdList[i]!}"/>
+                @}else{
+                <img src="/get_file?imageid=${imageIdList[i]!}"/>
+                @}
+            </li>
+            @}
+        </ul>
+    </div>
+    <div id="content_left">
+        <div id="content_right_det">
+            @for(var i=0;i<imageIdList.~size;i++){
+                @if(i == 0){
+                <img src="/get_file?imageid=${imageIdList[i]!}"/>
+                @}
+            @}
+        </div>
+    </div>
+</div>
+
+<script>
+    $("#content_right ul img").click(function () {
+        var link = $(this).attr("src");
+        $(this).addClass("active").parent("li").siblings().find("img").removeClass("active");
+        $("#content_right_det img").attr("src",link);
+    })
+</script>
+@}

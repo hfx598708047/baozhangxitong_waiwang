@@ -1,0 +1,62 @@
+@layout("/common/_container.html"){
+<style type="text/css">
+    #NodeTable{
+        width: 100%
+    }
+    #NodeTable thead{
+        background: #ebf0f6;
+    }
+    #NodeTable thead th{
+        padding: 10px 0;
+        text-align:center;
+    }
+    #NodeTable tbody td{
+        padding: 8px 0;
+        text-align:center;
+        word-break:break-all;
+        white-space : normal;
+    }
+    table,table tr th, table tr td {
+        border:1px solid #bababa;
+    }
+</style>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-content">
+                <div class="row row-lg">
+                    <div class="col-sm-12">
+                        <table id="NodeTable" data-mobile-responsive="true" data-click-to-select="true">
+                            <thead>
+                            <tr>
+                                <th>序号</th>
+                                <th>办理节点</th>
+                                <th>提交日期</th>
+                                <th>办理人</th>
+                                <th>办理日期</th>
+                                <th>意见</th>
+                                <th>退件原因</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                @for(node in nodeList){
+                                <tr>
+                                    <td>${node.RECWORKPHASENUM!}</td>
+                                    <td>${node.OPFLOWPHASENAME!}</td>
+                                    <td>${node.PHASESTARTTIME!}</td>
+                                    <td>${node.USERNAME!}</td>
+                                    <td>${node.WORKTIME!}</td>
+                                    <td>${node.WORKOPINION!}</td>
+                                    <td>${node.RETURNREASON!}</td>
+                                </tr>
+                                @}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@}

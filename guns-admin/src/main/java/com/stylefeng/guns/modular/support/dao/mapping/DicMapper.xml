@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.stylefeng.guns.modular.support.dao.DicMapper">
+
+    <resultMap id="dicMap" type="com.stylefeng.guns.modular.support.model.Dic">
+        <result column="name" property="value"/>
+        <result column="code" property="code"/>
+    </resultMap>
+
+    <resultMap id="districtDicMap" type="com.stylefeng.guns.modular.support.model.Dic">
+        <result column="districtcode" property="code"/>
+        <result column="districtname" property="value"/>
+    </resultMap>
+
+    <select id="getIdCard" resultMap="dicMap">
+        select * from tbdwownercerttype
+    </select>
+
+    <select id="getBuildingStructure" resultMap="dicMap">
+        select * from tbdwarchitstruct
+    </select>
+
+    <select id="getRegion" resultMap="dicMap">
+        select * from tbdwdistrict
+    </select>
+
+    <select id="getHouseType" resultMap="districtDicMap">
+        select * from tbdwhousetype
+    </select>
+
+    <select id="getMaterial" resultMap="dicMap">
+        select * from tbdsmattype
+    </select>
+
+    <select id="getRefund" resultMap="dicMap">
+        select * from tbdwrecreturntype
+    </select>
+
+    <select id="getFamilyType" resultMap="dicMap">
+        select * from tbdwfamilytype
+    </select>
+
+    <select id="getHouseuSage" resultMap="dicMap">
+        select * from tbdwhouseusage
+    </select>
+</mapper>
